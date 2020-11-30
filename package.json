@@ -1,0 +1,18 @@
+{
+  "name": "windows_config_migrator",
+  "version": "1.0.0",
+  "description": "Creates a custom schema to migrate windows 10 settings between computers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/N-bred/windows_config_migrator"
+  },
+  "keywords": [
+    "settings"
+  ],
+  "author": "Nicolas Caballero",
+  "license": "ISC"
+}
