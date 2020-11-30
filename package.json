@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Creates a custom schema to migrate windows 10 settings between computers",
   "main": "index.js",
+
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
