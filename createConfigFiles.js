@@ -1,6 +1,7 @@
 const fs = require('fs/promises')
 const path = require('path')
 const os = require('os')
+const { promisifiedExec } = require('./promisifiedExec')
 
 const homedir = os.homedir()
 
@@ -35,9 +36,19 @@ async function bashFile() {
   }
 }
 
+async function calibreFile() {
+  const pathToDes = path.resolve('Configuration', 'Calibre')
+  try {
+    await promisifiedExec('calibre-debug', ['--export-all-calibre-data', pathToDes, 'all'])
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 async function main() {
-  await vsCodeFile()
-  await bashFile()
+  // await vsCodeFile()
+  // await bashFile()
+  // await calibreFile()
 }
 
 main()
