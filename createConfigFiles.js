@@ -4,11 +4,22 @@ const os = require('os')
 const { promisifiedExec } = require('./promisifiedExec')
 
 const homedir = os.homedir()
+const workdir = 'Configuration'
+const vsCodeFolder = path.join(workdir, 'VSCode')
+const bashFolder = path.join(workdir, 'bash')
+const calibreFolder = path.join(workdir, 'Calibre')
+
+async function createFolders() {
+  await fs.mkdir(workdir)
+  await fs.mkdir(vsCodeFolder)
+  await fs.mkdir(bashFolder)
+  await fs.mkdir(calibreFolder)
+}
 
 async function vsCodeFile() {
   const fileName = 'settings.json'
   const pathToSrc = path.join(homedir, 'AppData', 'Roaming', 'Code', 'User')
-  const pathToDes = path.join('Configuration', 'VSCode', fileName)
+  const pathToDes = path.join(vsCodeFolder, fileName)
   const list = await fs.readdir(pathToSrc)
 
   if (list.indexOf(fileName) !== -1) {
@@ -23,7 +34,7 @@ async function vsCodeFile() {
 
 async function bashFile() {
   const filename = '.bashrc'
-  const pathToDes = path.join('Configuration', 'bash', filename)
+  const pathToDes = path.join(bashFolder, filename)
   const list = await fs.readdir(homedir)
 
   if (list.indexOf(filename) !== -1) {
@@ -37,7 +48,7 @@ async function bashFile() {
 }
 
 async function calibreFile() {
-  const pathToDes = path.resolve('Configuration', 'Calibre')
+  const pathToDes = path.resolve(calibreFolder)
   try {
     await promisifiedExec('calibre-debug', ['--export-all-calibre-data', pathToDes, 'all'])
   } catch (e) {
@@ -45,10 +56,13 @@ async function calibreFile() {
   }
 }
 
-async function main() {
-  // await vsCodeFile()
-  // await bashFile()
-  // await calibreFile()
+async function createConfigFiles() {
+  await createFolders()
+  await vsCodeFile()
+  await bashFile()
+  await calibreFile()
 }
 
-main()
+module.exports = {
+  createConfigFiles,
+}
