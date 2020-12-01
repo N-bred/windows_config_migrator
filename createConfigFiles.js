@@ -2,18 +2,25 @@ const fs = require('fs/promises')
 const path = require('path')
 const os = require('os')
 const { promisifiedExec } = require('./promisifiedExec')
+const fse = require('fs-extra')
 
 const homedir = os.homedir()
-const workdir = 'Configuration'
-const vsCodeFolder = path.join(workdir, 'VSCode')
-const bashFolder = path.join(workdir, 'bash')
-const calibreFolder = path.join(workdir, 'Calibre')
+const workdir = path.join(__dirname, process.env.DIST_FOLDER || 'dist', process.env.CONFIGURATION_FOLDER || 'Configuration')
+const windowsSrcFolder = process.env.WINDOWS_SRC_FOLDER || 'W10_CONFIG'
+const vsCodeFolder = path.join(workdir, process.env.VS_CODE_FOLDER || 'VSCode')
+const bashFolder = path.join(workdir, process.env.BASH_FOLDER || 'bash')
+const calibreFolder = path.join(workdir, process.env.CALIBRE_FOLDER || 'Calibre')
+const windowsFolder = path.join(workdir, process.env.WINDOWS_FOLDER || 'Windows')
 
 async function createFolders() {
-  await fs.mkdir(workdir)
-  await fs.mkdir(vsCodeFolder)
-  await fs.mkdir(bashFolder)
-  await fs.mkdir(calibreFolder)
+  try {
+    await fs.mkdir(workdir)
+    await fs.mkdir(vsCodeFolder)
+    await fs.mkdir(bashFolder)
+    await fs.mkdir(calibreFolder)
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 async function vsCodeFile() {
@@ -56,11 +63,20 @@ async function calibreFile() {
   }
 }
 
+async function windows10Config() {
+  try {
+    await fse.copy(windowsSrcFolder, windowsFolder)
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 async function createConfigFiles() {
-  await createFolders()
-  await vsCodeFile()
-  await bashFile()
-  await calibreFile()
+  try {
+    await Promise.all([createFolders(), vsCodeFile(), bashFile(), calibreFile(), windows10Config()])
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 module.exports = {
