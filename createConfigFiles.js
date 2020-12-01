@@ -1,7 +1,7 @@
 const fs = require('fs/promises')
 const path = require('path')
 const os = require('os')
-const { promisifiedExec } = require('./promisifiedExec')
+const { promisifiedExec } = require('./utils/promisifiedExec')
 const fse = require('fs-extra')
 
 const homedir = os.homedir()

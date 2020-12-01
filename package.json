@@ -16,6 +16,7 @@
   "author": "Nicolas Caballero",
   "license": "ISC",
   "dependencies": {
+    "archiver": "^5.1.0",
     "dotenv": "^8.2.0",
     "fs-extra": "^9.0.1"
   }
