@@ -42,7 +42,14 @@ async function createAndZipFolder(name, nameRegex) {
 
 async function createFolderBackups() {
   try {
-    Promise.all([createFolders(), createAndZipFolder('Music', new RegExp(/^musi(c|k)a?$/gi))])
+    Promise.all([
+      createFolders(),
+      createAndZipFolder('Music', new RegExp(/^musi(c|k)a?$/gi)),
+      createAndZipFolder('Images', new RegExp(/^image(ne)?s?$/gi)),
+      createAndZipFolder('Videos', new RegExp(/^videos?$/gi)),
+      createAndZipFolder('Downloads', new RegExp(/^d(escarga|ownload)s$/gi)),
+      createAndZipFolder('Documents', new RegExp(/^documento?s$/gi)),
+    ])
   } catch (e) {
     console.log(e)
   }
