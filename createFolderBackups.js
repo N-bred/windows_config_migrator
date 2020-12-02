@@ -14,20 +14,24 @@ async function createFolders() {
   }
 }
 
-async function createMusicBackup() {
+async function createAndZipFolder(name, nameRegex) {
   try {
-    const list = await fs.readdir(process.cwd())
-    const musicFolderName = list.find((name) => name.match(/^musi(c|k)a?$/gi))
+    // Change to CWD in development
+    // Change to Homedir in production
+    const list = await fs.readdir(process.env.MODE === 'dev' ? process.cwd() : homedir)
+    const folderName = list.find((name) => name.match(nameRegex))
 
-    if (!musicFolderName) {
+    if (!folderName) {
       throw {
-        message: 'Music Folder not Found',
+        message: `${name} not found`,
         code: 1,
       }
     }
+    // Change to CWD in development
+    // Change to Homedir in production
+    const pathToSrc = path.join(process.env.MODE === 'dev' ? process.cwd() : homedir, folderName)
+    const pathToDest = path.join(workDir, folderName + '.zip')
 
-    const pathToSrc = path.join(process.cwd(), musicFolderName)
-    const pathToDest = path.join(workDir, musicFolderName + '.zip')
     await zipDirectory(pathToSrc, pathToDest)
   } catch (e) {
     if (e.code === 1) {
@@ -38,7 +42,7 @@ async function createMusicBackup() {
 
 async function createFolderBackups() {
   try {
-    Promise.all([createFolders(), createMusicBackup()])
+    Promise.all([createFolders(), createAndZipFolder('Music', new RegExp(/^musi(c|k)a?$/gi))])
   } catch (e) {
     console.log(e)
   }
