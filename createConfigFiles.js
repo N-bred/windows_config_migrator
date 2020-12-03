@@ -1,8 +1,7 @@
-const fs = require('fs/promises')
+const fs = require('fs-extra')
 const path = require('path')
 const os = require('os')
 const { promisifiedExec } = require('./utils/promisifiedExec')
-const fse = require('fs-extra')
 
 const homedir = os.homedir()
 const workdir = path.join(__dirname, process.env.DIST_FOLDER || 'dist', process.env.CONFIGURATION_FOLDER || 'Configuration')
@@ -65,7 +64,7 @@ async function calibreFile() {
 
 async function windows10Config() {
   try {
-    await fse.copy(windowsSrcFolder, windowsFolder)
+    await fs.copy(windowsSrcFolder, windowsFolder)
   } catch (e) {
     console.log(e)
   }
