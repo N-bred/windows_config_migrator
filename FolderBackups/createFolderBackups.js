@@ -2,9 +2,7 @@ const fs = require('fs-extra')
 const os = require('os')
 const path = require('path')
 const { zipDirectory } = require('./utils/archiverAsync')
-
-const homedir = os.homedir()
-const workDir = path.join(__dirname, process.env.DIST_FOLDER || 'dist', process.env.BACKUP_FOLDER || 'Backup')
+const { workDir, srcDir } = require('.')
 
 async function createFolders() {
   try {
@@ -18,7 +16,7 @@ async function createAndZipFolder(name, nameRegex) {
   try {
     // Change to CWD in development
     // Change to Homedir in production
-    const list = await fs.readdir(process.env.MODE === 'dev' ? process.cwd() : homedir)
+    const list = await fs.readdir(srcDir)
     const folderName = list.find((name) => name.match(nameRegex))
 
     if (!folderName) {
@@ -29,7 +27,7 @@ async function createAndZipFolder(name, nameRegex) {
     }
     // Change to CWD in development
     // Change to Homedir in production
-    const pathToSrc = path.join(process.env.MODE === 'dev' ? process.cwd() : homedir, folderName)
+    const pathToSrc = path.join(srcDir, folderName)
     const pathToDest = path.join(workDir, folderName + '.zip')
 
     await zipDirectory(pathToSrc, pathToDest)

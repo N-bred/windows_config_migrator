@@ -1,7 +1,6 @@
-require('dotenv').config()
 const fs = require('fs/promises')
-const { createConfigFiles } = require('./createConfigFiles')
-const { createFolderBackups } = require('./createFolderBackups')
+const { createConfigFiles } = require('./ConfigFiles/createConfigFiles')
+const { createFolderBackups } = require('./FolderBackups/createFolderBackups')
 
 const distDir = process.env.DIST_FOLDER || 'dist'
 

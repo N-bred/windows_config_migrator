@@ -1,15 +1,17 @@
 const fs = require('fs-extra')
 const path = require('path')
-const os = require('os')
-const { promisifiedExec } = require('./utils/promisifiedExec')
+const { promisifiedExec } = require('../utils/promisifiedExec')
 
-const homedir = os.homedir()
-const workdir = path.join(__dirname, process.env.DIST_FOLDER || 'dist', process.env.CONFIGURATION_FOLDER || 'Configuration')
-const windowsSrcFolder = process.env.WINDOWS_SRC_FOLDER || 'W10_CONFIG'
-const vsCodeFolder = path.join(workdir, process.env.VS_CODE_FOLDER || 'VSCode')
-const bashFolder = path.join(workdir, process.env.BASH_FOLDER || 'bash')
-const calibreFolder = path.join(workdir, process.env.CALIBRE_FOLDER || 'Calibre')
-const windowsFolder = path.join(workdir, process.env.WINDOWS_FOLDER || 'Windows')
+const {
+  homedir,
+  workdir,
+  windowsSrcFolder,
+  vsCodeFolder,
+  bashFolder,
+  calibreFolder,
+  windowsFolder,
+  vsCodeSrcFolder,
+} = require('.')
 
 async function createFolders() {
   try {
@@ -24,7 +26,7 @@ async function createFolders() {
 
 async function vsCodeFile() {
   const fileName = 'settings.json'
-  const pathToSrc = path.join(homedir, 'AppData', 'Roaming', 'Code', 'User')
+  const pathToSrc = vsCodeSrcFolder
   const pathToDes = path.join(vsCodeFolder, fileName)
   const list = await fs.readdir(pathToSrc)
 
