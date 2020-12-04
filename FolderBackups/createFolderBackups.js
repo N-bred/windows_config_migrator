@@ -1,7 +1,7 @@
 const fs = require('fs-extra')
 const os = require('os')
 const path = require('path')
-const { zipDirectory } = require('./utils/archiverAsync')
+const { zipDirectory } = require('../utils/archiverAsync')
 const { workDir, srcDir } = require('.')
 
 async function createFolders() {

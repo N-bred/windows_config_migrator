@@ -1,12 +1,12 @@
 const { loadConfigFiles } = require('./ConfigFiles/loadConfigFiles')
 
-async function main() {
+function main() {
   const argv = process.argv.slice(2)
 
-  argv.forEach((arg) => {
+  argv.forEach(async (arg) => {
     switch (arg) {
       case '--files':
-          await loadConfigFiles()
+        await loadConfigFiles()
         break
       case '--folders':
         console.log('Now FOlders')
