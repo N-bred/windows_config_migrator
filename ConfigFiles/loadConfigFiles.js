@@ -47,8 +47,6 @@ async function loadConfigFiles() {
   }
 }
 
-loadConfigFiles()
-
 module.exports = {
-  loadVSCodeConfig,
+  loadConfigFiles,
 }
