@@ -1,4 +1,5 @@
 const { loadConfigFiles } = require('./ConfigFiles/loadConfigFiles')
+const { loadFolderBackups } = require('./FolderBackups/loadFolderBackups')
 
 function main() {
   const argv = process.argv.slice(2)
@@ -13,11 +14,11 @@ function main() {
 
   argv.forEach(async (arg) => {
     switch (arg) {
+      case '--folders':
+        await loadFolderBackups()
+        break
       case '--files':
         await loadConfigFiles()
-        break
-      case '--folders':
-        console.log('Now FOlders')
         break
       default:
         console.log('No arguments passed')
