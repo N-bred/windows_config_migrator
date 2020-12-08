@@ -17,10 +17,7 @@ const {
 
 async function createFolders() {
   try {
-    await fs.mkdir(workdir)
-    await fs.mkdir(vsCodeFolder)
-    await fs.mkdir(bashFolder)
-    await fs.mkdir(calibreFolder)
+    Promise.all([fs.mkdir(workdir), fs.mkdir(vsCodeFolder), fs.mkdir(bashFolder), fs.mkdir(calibreFolder)])
   } catch (e) {
     console.log(e)
   }
@@ -37,11 +34,13 @@ async function calibreFile() {
 
 async function createConfigFiles() {
   try {
-    await createFolders()
-    await copyFileToFolder(vsCodeUserFolder, vsCodeFolder, 'settings.json')
-    await copyFileToFolder(bashUserFolder, bashFolder, '.bashrc')
-    await calibreFile()
-    await copyDirectory(windowsSrcFolder, windowsFolder)
+    Promise.all([
+      createFolders(),
+      copyFileToFolder(vsCodeUserFolder, vsCodeFolder, 'settings.json'),
+      copyFileToFolder(bashUserFolder, bashFolder, '.bashrc'),
+      calibreFile(),
+      copyDirectory(windowsSrcFolder, windowsFolder),
+    ])
   } catch (e) {
     console.error(e)
   }

@@ -1,7 +1,7 @@
 const { loadConfigFiles } = require('./ConfigFiles/loadConfigFiles')
 const { loadFolderBackups } = require('./FolderBackups/loadFolderBackups')
 
-function main() {
+async function main() {
   const argv = process.argv.slice(2)
 
   if (!argv.length) {
