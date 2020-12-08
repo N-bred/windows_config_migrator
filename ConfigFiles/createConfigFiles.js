@@ -5,14 +5,14 @@ const { copyFileToFolder } = require('../utils/copyFileTofolder')
 const { copyDirectory } = require('../utils/copyDirectory')
 
 const {
-  homedir,
   workdir,
   windowsSrcFolder,
   vsCodeFolder,
   bashFolder,
+  bashUserFolder,
   calibreFolder,
   windowsFolder,
-  vsCodeSrcFolder,
+  vsCodeUserFolder,
 } = require('.')
 
 async function createFolders() {
@@ -38,8 +38,8 @@ async function calibreFile() {
 async function createConfigFiles() {
   try {
     await createFolders()
-    await copyFileToFolder(vsCodeSrcFolder, vsCodeFolder, 'settings.json')
-    await copyFileToFolder(homedir, bashFolder, '.bashrc')
+    await copyFileToFolder(vsCodeUserFolder, vsCodeFolder, 'settings.json')
+    await copyFileToFolder(bashUserFolder, bashFolder, '.bashrc')
     await calibreFile()
     await copyDirectory(windowsSrcFolder, windowsFolder)
   } catch (e) {

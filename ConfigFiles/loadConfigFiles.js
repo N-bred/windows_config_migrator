@@ -6,16 +6,16 @@ const {
   vsCodeFolder,
   bashFolder,
   calibreFolder,
-  vsCodeDevDestFolder,
-  bashDevDestFolder,
-  calibreDevDestFolder,
+  vsCodeDestFolder,
+  bashDestFolder,
+  calibreDestFolder,
 } = require('.')
 
 async function createFolders() {
   if (mode !== 'dev') return
   try {
     await fs.mkdir(destFolder)
-    await fs.mkdir(vsCodeDevDestFolder)
+    await fs.mkdir(vsCodeDestFolder)
     await fs.mkdir(bashDevDestFolder)
     await fs.mkdir(calibreDevDestFolder)
   } catch (e) {
@@ -26,9 +26,9 @@ async function createFolders() {
 async function loadConfigFiles() {
   try {
     await createFolders()
-    await copyFileToFolder(vsCodeFolder, vsCodeDevDestFolder, 'settings.json')
-    await copyFileToFolder(bashFolder, bashDevDestFolder, '.bashrc')
-    await copyFileToFolder(calibreFolder, calibreDevDestFolder, 'data')
+    await copyFileToFolder(vsCodeFolder, vsCodeDestFolder, 'settings.json')
+    await copyFileToFolder(bashFolder, bashDestFolder, '.bashrc')
+    await copyFileToFolder(calibreFolder, calibreDestFolder, 'data')
   } catch (e) {
     console.error(e)
   }
