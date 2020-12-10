@@ -21,7 +21,7 @@ async function main() {
 }
 
 it('Zips directory to destination', async () => {
-  expect.assertions(1)
+  // expect.assertions(1)
   const list = await main()
-  expect(list.toContain(`${FOLDER_NAME}.zip`))
+  expect(list).toContain(`${FOLDER_NAME}.zip`)
 })
