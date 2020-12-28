@@ -5,7 +5,8 @@ const os = require('os')
 const homedir = os.homedir()
 const mode = process.env.MODE
 const destFolder = process.env.DEV_DEST_FOLDER
-const workdir = path.join(process.env.DIST_FOLDER || 'dist', process.env.CONFIGURATION_FOLDER || 'Configuration')
+const workdirDev = path.join(process.env.DIST_FOLDER || 'dist', process.env.CONFIGURATION_FOLDER || 'Configuration')
+const workdir = mode === 'dev' ? workdirDev : path.join(process.env.DRIVE, workdirDev)
 
 const windowsSrcFolder = process.env.WINDOWS_SRC_FOLDER || 'W10_CONFIG'
 const windowsFolder = path.join(workdir, process.env.WINDOWS_FOLDER || 'Windows')

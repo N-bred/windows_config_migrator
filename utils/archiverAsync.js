@@ -17,7 +17,11 @@ function zipDirectory(source, destination) {
       .on('error', (err) => reject(err))
       .pipe(stream)
 
-    stream.on('close', () => resolve())
+    stream.on('close', () => {
+      console.log(`${archive.pointer()} total bytes to ${destination}`)
+      resolve()
+    })
+
     archive.finalize()
   })
 }

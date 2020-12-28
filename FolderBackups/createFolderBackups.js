@@ -12,14 +12,12 @@ async function createFolders() {
 
 async function createFolderBackups() {
   try {
-    Promise.all([
-      createFolders(),
-      createAndZipFolder('Music', new RegExp(/^musi(c|k)a?$/gi), srcDir, workDir),
-      createAndZipFolder('Images', new RegExp(/^image(ne)?s?$/gi), srcDir, workDir),
-      createAndZipFolder('Videos', new RegExp(/^videos?$/gi), srcDir, workDir),
-      createAndZipFolder('Downloads', new RegExp(/^d(escarga|ownload)s$/gi), srcDir, workDir),
-      createAndZipFolder('Documents', new RegExp(/^documento?s$/gi), srcDir, workDir),
-    ])
+    await createFolders()
+    await createAndZipFolder('Music', new RegExp(/^musi(c|k)a?$/gi), srcDir, workDir)
+    await createAndZipFolder('Images', new RegExp(/^(pictures|imagenes)$/gi), srcDir, workDir)
+    await createAndZipFolder('Videos', new RegExp(/^videos?$/gi), srcDir, workDir)
+    await createAndZipFolder('Downloads', new RegExp(/^d(escarga|ownload)s$/gi), srcDir, workDir)
+    await createAndZipFolder('Documents', new RegExp(/^documento?s$/gi), srcDir, workDir)
   } catch (e) {
     console.log(e)
   }
